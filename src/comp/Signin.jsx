@@ -1,74 +1,96 @@
-import React, { useState } from 'react'
-import '../Signup.css'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-
+import React, { useState } from "react";
+import "../Signup.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const navigate = useNavigate();
 
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
 
-  const nav = useNavigate()
+  const handleInputChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
 
-
-  const [input, setinput] = useState(
-    { "email": "", "password": "" }
-
-  )
-  const ih = (e) => {
-    setinput({ ...input, [e.target.name]: e.target.value })
-  }
-  const rv = () => {
-    console.log(input)
-    axios.post("http://localhost:3030/signIn", input).then(
-      (response) => {
-        console.log(response.data)
+  const handleSignIn = () => {
+    axios
+      .post("http://localhost:3030/signIn", input)
+      .then((response) => {
         if (response.data.status === "incorrect password") {
-          alert("invalid password")
+          alert("Invalid password");
         } else if (response.data.status === "invalid id") {
-          alert("invalid email")
-
+          alert("Invalid email");
         } else {
-          let token = response.data.token
-          let userId = response.data.userId
-          
-          sessionStorage.setItem("userId", userId)
-          sessionStorage.setItem("token", token)
-          nav("/create")
+          let token = response.data.token;
+          let userId = response.data.userId;
+          sessionStorage.setItem("userId", userId);
+          sessionStorage.setItem("token", token);
+          navigate("/create");
         }
-      }
-    ).catch((error) => {
-      console.log(error)
-    })
-  }
+      })
+      .catch((error) => {
+        alert("An error occurred: " + error.message);
+      });
+  };
+
+  const handleFacebookSignIn = () => {
+    alert("Facebook Sign-In is not yet implemented.");
+  };
+
   return (
-    <div>
+    <div className="signin-container">
+      <h1 className="app-title">Every New Travel Blog</h1>
       <div className="container">
-        <div className="row">
-          <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-            <div className="row g-3">
-              <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <label htmlFor="" className="form-label">Email</label>
-                <input type="text" className="form-control" name='email' value={input.email} onChange={ih} />
-              </div>
-              <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <label htmlFor="" className="form-label">Password</label>
-                <input type="password" className="form-control" name='password' value={input.password} onChange={ih} />
-              </div>
-              <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <button className="btn btn-success" onClick={rv}>signin</button>
-              </div>
-              <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <a href='/signup' className="btn btn-primary">new user</a>
-              </div>
-            </div>
-
-
+        <div className="row g-3">
+          <div className="col-12">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="email"
+              value={input.email}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="col-12">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              value={input.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="col-12">
+            <button className="btn btn-success w-100" onClick={handleSignIn}>
+              Sign In
+            </button>
+          </div>
+          <div className="col-12">
+            <button
+              className="btn btn-primary w-100"
+              onClick={handleFacebookSignIn}
+            >
+              Sign In with Facebook
+            </button>
+          </div>
+          <div className="col-12 text-center">
+            <a href="/signup" className="btn btn-link">
+              New User? Sign Up
+            </a>
           </div>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Signin
+export default Signin;

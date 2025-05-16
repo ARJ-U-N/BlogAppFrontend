@@ -1,0 +1,55 @@
+.signin-container,
+.signup-container {
+  background-image: url("path-to-your-background-image.jpg"); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.app-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-control {
+  border-radius: 25px;
+  font-size: 0.9rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+}
+
+.btn-success,
+.btn-primary,
+.btn-link {
+  border-radius: 25px;
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+.btn-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
